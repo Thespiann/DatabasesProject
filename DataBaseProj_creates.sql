@@ -31,7 +31,7 @@
 		visiting_team varchar(20) not null references team (name),
 		home_score smallint not null,
 		visiting_score smallint not null,
-		match_date date not null,
+		date date not null,
 		id serial primary key);
 
 
