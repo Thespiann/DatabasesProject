@@ -14,7 +14,6 @@
 		last_name varchar(10) not null,
 		team varchar(20) not null references team(name),
 		player_position varchar(20) not null,
-		minutes smallint not null,
 		id serial primary key);
 		
 	create table if not exists manager(
