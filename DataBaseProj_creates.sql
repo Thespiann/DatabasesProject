@@ -41,3 +41,9 @@
     		match_id integer not null references match(id),
     		event_time time not null,
     		id serial primary key);
+		
+	create table if not exists minutes_per_match(
+	duration integer not null,
+	player_id integer not null references player(id),
+	match_id integer not null references match(id),
+	id serial primary key);
