@@ -31,6 +31,7 @@
 		home_score smallint not null,
 		visiting_score smallint not null,
 		date date not null,
+		total_duration smallint not null,
 		id serial primary key);
 
 
