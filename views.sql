@@ -1,6 +1,6 @@
 CREATE VIEW match_schedule AS
 SELECT thismatch.date AS match_date,
-	   thismatch.total_duration AS duration,
+       thismatch.total_duration AS duration,
        home_team.arena AS arena,
        thismatch.home_team AS home_team_name,
        thismatch.visiting_team AS visiting_team_name,
