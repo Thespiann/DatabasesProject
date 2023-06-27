@@ -28,15 +28,17 @@ select p.id as player_id,p.name as player_first_name, p.last_name as player_last
 --Ερώτημα 2δ
 SELECT Occasion, Performance_Of_Team
 FROM (
-  SELECT 'Total Matches: ' AS Occasion, (SELECT COUNT(*) FROM match WHERE home_team = 'AEK' OR visiting_team = 'AEK') AS Performance_Of_Team, 1 AS OrderNum
+  SELECT 'Total Matches: ' AS Occasion, (SELECT COUNT(*) FROM match WHERE ((home_team = 'AEK' OR visiting_team = 'AEK') 
+										AND (match.date >= '01-01-2023' AND match.date <= '12-30-2023')))
+ 										AS Performance_Of_Team, 1 AS OrderNum
 
   UNION
 
-  SELECT 'Home Matches: ', (SELECT COUNT(*) FROM match WHERE home_team = 'AEK'), 2
+  SELECT 'Home Matches: ', (SELECT COUNT(*) FROM match WHERE home_team = 'AEK' AND (match.date >= '01-01-2023' AND match.date <= '12-30-2023')), 2
 
   UNION
 
-  SELECT 'Away Matches: ', (SELECT COUNT(*) FROM match WHERE visiting_team = 'AEK'), 3
+  SELECT 'Away Matches: ', (SELECT COUNT(*) FROM match WHERE visiting_team = 'AEK' AND (match.date >= '01-01-2023' AND match.date <= '12-30-2023')), 3
 
   UNION
 
