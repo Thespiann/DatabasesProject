@@ -24,7 +24,7 @@ BEGIN
     IF (
         SELECT COUNT(*)
         FROM player
-        WHERE team_id = NEW.team_id
+        WHERE team = NEW.team
     ) > 11 THEN
         RAISE EXCEPTION 'Maximum number of players per team exceeded';
     END IF;
