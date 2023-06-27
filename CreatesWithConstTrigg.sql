@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS match (
     date date NOT NULL,
     total_duration smallint NOT NULL,
     id serial PRIMARY KEY,
-    CONSTRAINT unique_home_team UNIQUE (match_date, home_team),
-	CONSTRAINT unique_visiting_team UNIQUE (match_date, visiting_team)
+    CONSTRAINT unique_home_team UNIQUE (date, home_team),
+	CONSTRAINT unique_visiting_team UNIQUE (date, visiting_team)
 );
 --checking for minimum 10 days in between matches
 CREATE OR REPLACE FUNCTION check_min_days()
@@ -94,6 +94,31 @@ CREATE TABLE IF NOT EXISTS minutes_per_match(
 	player_id integer not null references player(id),
 	match_id integer not null references match(id),
 	id serial primary key);
+
+
+--function to insert manager using user:
+CREATE OR REPLACE FUNCTION promote_to_manager(player_id INT)
+RETURNS VOID AS $$
+DECLARE
+    total_minutes INTEGER;
+BEGIN
+    -- Calculate the total_minutes
+    SELECT COALESCE(SUM(duration), 0)
+    INTO total_minutes
+    FROM minutes_per_match
+    WHERE player_id = player_id;
+
+    -- Insert into the manager table
+    INSERT INTO manager (name, last_name, team, past_position, total_minutes)
+    SELECT name, last_name, team, player_position, total_minutes
+    FROM player
+    WHERE id = player_id;
+
+    -- Delete from the player table
+    DELETE FROM player WHERE id = player_id;
+END;
+$$ LANGUAGE plpgsql;
+
 
 	
 
