@@ -30,7 +30,7 @@ SELECT Occasion, Performance_Of_Team
 FROM (
   SELECT 'Total Matches: ' AS Occasion, (SELECT COUNT(*) FROM match WHERE ((home_team = 'AEK' OR visiting_team = 'AEK') 
 										AND (match.date >= '01-01-2023' AND match.date <= '12-30-2023')))
- 										AS Performance_Of_Team, 1 AS OrderNum
+ 										AS Performance_Of_Team, 1 AS Order_Num
 
   UNION
 
@@ -77,4 +77,4 @@ FROM (
   SELECT 'Away Draws: ', (SELECT away_draws FROM team WHERE name = 'AEK'), 12
 	
 ) AS sub
-ORDER BY OrderNum;
+ORDER BY Order_Num;
