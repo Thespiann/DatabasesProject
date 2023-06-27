@@ -37,7 +37,13 @@ BEFORE INSERT OR UPDATE ON player
 FOR EACH ROW
 EXECUTE FUNCTION check_max_players();
 
-CREATE TABLE IF NOT EXISTS manager () INHERITS (player);
+create table if not exists manager(
+		name varchar(10) not null ,
+		last_name varchar(10) not null,
+		team varchar(20) not null references team(name),
+		past_position varchar(20) not null,
+		total_minutes int,
+		id serial primary key);
 
 CREATE TABLE IF NOT EXISTS match (
     home_team varchar(20) NOT NULL REFERENCES team (name),
