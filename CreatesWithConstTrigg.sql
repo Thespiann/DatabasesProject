@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS match (
     visiting_team varchar(20) NOT NULL REFERENCES team (name),
     home_score smallint NOT NULL,
     visiting_score smallint NOT NULL,
-    match_date date NOT NULL,
+    date date NOT NULL,
     total_duration smallint NOT NULL,
     id serial PRIMARY KEY,
     CONSTRAINT unique_home_team UNIQUE (match_date, home_team),
@@ -63,13 +63,13 @@ DECLARE
     min_date date;
     max_date date;
 BEGIN
-    SELECT match_date - INTERVAL '10 days', match_date + INTERVAL '10 days'
+    SELECT date - INTERVAL '10 days', date + INTERVAL '10 days'
     INTO min_date, max_date-- the date a match could happen is this date -10 days and the max date a match could happen is this match date +10
     FROM match
     WHERE home_team = NEW.home_team OR visiting_team = NEW.home_team OR --i check for both visiting teams and home teams
           home_team = NEW.visiting_team OR visiting_team = NEW.visiting_team;
 
-    IF min_date IS NOT NULL AND NEW.match_date >= min_date AND NEW.match_date <= max_date THEN-- if i have a match for this team before the new one im adding, i check the dates 
+    IF min_date IS NOT NULL AND NEW.date >= min_date AND NEW.date <= max_date THEN-- if i have a match for this team before the new one im adding, i check the dates 
         RAISE EXCEPTION 'Minimum days between matches not satisfied';
     END IF;
 
