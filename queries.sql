@@ -13,6 +13,16 @@ JOIN match on game_event.match_id = match.id
 WHERE match.id = '5' AND (game_event.event_type = 'goal' OR game_event.event_type = 'penalty kick');
 
 --Ερώτημα 2γ
+select p.id as player_id,p.name as player_first_name, p.last_name as player_last_name, p.team,p.player_position, m.id as match_id,min.duration as minutes_per_player_per_match,
+	CASE WHEN game_events.match_id =m.id and game_events.player_id=p.id THEN game_events.event_type ELSE NULL END AS event_type
+	from player p
+	join match m on p.team=m.home_team or p.team=m.visiting_team
+	join minutes_per_match min on min.player_id=p.id and min.match_id=m.id
+	left join game_event game_events on game_events.player_id=p.id
+	where m.id IN (
+    SELECT match.id
+    FROM match
+    WHERE EXTRACT(YEAR FROM match.date) = 2023) and p.id = 3 order by m.id ;
 
 
 --Ερώτημα 2δ
