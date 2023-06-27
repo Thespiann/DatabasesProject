@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS team (
 CREATE TABLE IF NOT EXISTS player (
     name varchar(10) NOT NULL,
     last_name varchar(10) NOT NULL,
-    team_id varchar(20) NOT NULL REFERENCES team(name),
+    team varchar(20) NOT NULL REFERENCES team(name),
     player_position varchar(20) NOT NULL,
     id serial PRIMARY KEY
 );
